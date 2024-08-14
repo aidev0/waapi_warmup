@@ -15,6 +15,15 @@ load_dotenv()
 # Access the environment variables
 WAAPI_TOKEN = os.getenv("WAAPI_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+PROMPT = """
+You are a random whatsapp message generator in italian language. 
+Generate a message between 10 and 25 words, with common, random responses 
+between two people that can look credible. 
+Just one message. Don't put the massage into quotes. 
+Don't write nothing before or after the message. 
+Never use spam words that whatsapp may flag as spam. 
+Ends every message saying that you are a guy named Giampiero."""
+
 
 # Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -99,7 +108,7 @@ def instance_messaging(sender_instance):
                     receiver_instance = random.choice(available_receivers)
 
                     # Generate a random message using the get_message function
-                    message_content = "Generate a random short message, maximum 30 words."
+                    message_content = PROMPT
                     messages = [{"role": "user", "content": message_content}]
                     message = get_message(messages)
 
