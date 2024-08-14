@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 import requests
 from dotenv import load_dotenv
 from openai import OpenAI
+from pytz import timezone
+import pytz
 
 # Load environment variables from .env file
 load_dotenv()
@@ -19,6 +21,9 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Lock to coordinate access to shared resources
 lock = threading.Lock()
+
+# Set your desired timezone (PST)
+pst_tz = timezone('America/Los_Angeles')
 
 
 # Function to generate a random message using a specific model with retries
@@ -48,6 +53,7 @@ instances = [
     {"instance": "17668", "chatId": "393518024247@c.us"},
     {"instance": "17670", "chatId": "14157250545@c.us"},
     {"instance": "7506", "chatId": "393513919566@c.us"},
+    {"instance": "13015", "chatId": "393478207008@c.us"},
     {"instance": "15037", "chatId": "393271696617@c.us"},
     {"instance": "15038", "chatId": "393270196822@c.us"},
     {"instance": "15040", "chatId": "393505357545@c.us"},
@@ -77,7 +83,7 @@ def send_message(sender_instance, receiver_chat_id, message):
 
 # Function to check if the current time is within the allowed messaging hours
 def is_allowed_time():
-    now = datetime.now().time()
+    now = datetime.now(pytz.utc).astimezone(pst_tz).time()  # Convert UTC to PST
     return not (now >= datetime.strptime("23:00", "%H:%M").time() or now <= datetime.strptime("06:00", "%H:%M").time())
 
 
@@ -106,17 +112,19 @@ def instance_messaging(sender_instance):
                 else:
                     print(f"{sender_instance['chatId']} has no available receivers this round.")
 
-            # Wait for a random time between 5 to 30 minutes before the next round
-            action_wait_time = random.randint(5 * 60, 30 * 60)
-            print(f"{sender_instance['chatId']} waiting for {action_wait_time // 60} minutes before the next round.")
-            time.sleep(action_wait_time)
+            # Wait for a random time between 10 seconds and 2 minutes before the next round
+            wait_time = random.randint(10, 120)
+            print(f"{sender_instance['chatId']} waiting for {wait_time} seconds before the next round.")
+            time.sleep(wait_time)
 
         else:
             # Sleep until 06:00 if it's outside allowed messaging hours
-            now = datetime.now()
-            next_allowed_time = (now + timedelta(days=1)).replace(hour=6, minute=0, second=0, microsecond=0)
+            now = datetime.now(pytz.utc).astimezone(pst_tz)
+            next_allowed_time = now.replace(hour=6, minute=0, second=0, microsecond=0)
+            if now.time() > datetime.strptime("23:00", "%H:%M").time():
+                next_allowed_time += timedelta(days=1)
             sleep_time = (next_allowed_time - now).total_seconds()
-            print(f"{sender_instance['chatId']} sleeping for {int(sleep_time // 3600)} hours until 06:00.")
+            print(f"{sender_instance['chatId']} sleeping for {int(sleep_time // 3600)} hours until 06:00 PST.")
             time.sleep(sleep_time)
 
 
@@ -128,11 +136,11 @@ if __name__ == "__main__":
         threads.append(thread)
         thread.start()
 
-        # Introduce a delay of 5 to 10 minutes before starting the next thread
+        # Introduce a delay of 10 to 30 seconds before starting the next thread
         if i < len(instances) - 1:
-            thread_wait_time = random.randint(5 * 60, 10 * 60)
-            print(f"Delaying {thread_wait_time // 60} minutes before starting the next thread.")
-            time.sleep(thread_wait_time)
+            delay = random.randint(10, 30)
+            print(f"Delaying {delay} seconds before starting the next thread.")
+            time.sleep(delay)
 
     # Keep the main program running to allow threads to operate
     for thread in threads:
