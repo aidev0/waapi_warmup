@@ -118,14 +118,11 @@ def instance_messaging(sender_instance):
             time.sleep(wait_time)
 
         else:
-            # Sleep until 06:00 if it's outside allowed messaging hours
-            now = datetime.now(pytz.utc).astimezone(pst_tz)
-            next_allowed_time = now.replace(hour=6, minute=0, second=0, microsecond=0)
-            if now.time() > datetime.strptime("23:00", "%H:%M").time():
-                next_allowed_time += timedelta(days=1)
-            sleep_time = (next_allowed_time - now).total_seconds()
-            print(f"{sender_instance['chatId']} sleeping for {int(sleep_time // 3600)} hours until 06:00 PST.")
-            time.sleep(sleep_time)
+            # Every 10 minutes, print that the instance is alive but sleeping
+            while not is_allowed_time():
+                print(f"{sender_instance['chatId']} WhatsApp warmer is sleeping now but instance is alive. "
+                      f"Getting back to work at 6 AM PST.")
+                time.sleep(600)  # Sleep for 10 minutes
 
 
 if __name__ == "__main__":
