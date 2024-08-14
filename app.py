@@ -112,10 +112,10 @@ def instance_messaging(sender_instance):
                 else:
                     print(f"{sender_instance['chatId']} has no available receivers this round.")
 
-            # Wait for a random time between 10 seconds and 2 minutes before the next round
-            wait_time = random.randint(10, 120)
-            print(f"{sender_instance['chatId']} waiting for {wait_time} seconds before the next round.")
-            time.sleep(wait_time)
+            # Wait for a random time between 5 and 30 minutes before the next round
+            action_wait_time = random.randint(300, 1800)  # 300 seconds (5 minutes) to 1800 seconds (30 minutes)
+            print(f"{sender_instance['chatId']} waiting for {action_wait_time // 60} minutes before the next round.")
+            time.sleep(action_wait_time)
 
         else:
             # Every 10 minutes, print that the instance is alive but sleeping
@@ -133,11 +133,10 @@ if __name__ == "__main__":
         threads.append(thread)
         thread.start()
 
-        # Introduce a delay of 10 to 30 seconds before starting the next thread
-        if i < len(instances) - 1:
-            delay = random.randint(10, 30)
-            print(f"Delaying {delay} seconds before starting the next thread.")
-            time.sleep(delay)
+        # Introduce a delay of 2 to 10 minutes before starting the next thread
+        thread_wait_time = random.randint(120, 600)  # 120 seconds (2 minutes) to 600 seconds (10 minutes)
+        print(f"Delaying {thread_wait_time // 60} minutes before starting the next thread.")
+        time.sleep(thread_wait_time)
 
     # Keep the main program running to allow threads to operate
     for thread in threads:
