@@ -133,7 +133,7 @@ if __name__ == "__main__":
         threads.append(thread)
         thread.start()
 
-        # Introduce a delay of 2 to 10 minutes before starting the next thread
+        # Introduce a delay of 1 to 5 minutes before starting the next thread
         thread_wait_time = random.randint(60, 300)  # 120 seconds (2 minutes) to 600 seconds (10 minutes)
         print(f"Delaying {thread_wait_time // 60} minutes before starting the next thread.")
         time.sleep(thread_wait_time)
