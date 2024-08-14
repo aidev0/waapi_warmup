@@ -48,7 +48,6 @@ instances = [
     {"instance": "17668", "chatId": "393518024247@c.us"},
     {"instance": "17670", "chatId": "14157250545@c.us"},
     {"instance": "7506", "chatId": "393513919566@c.us"},
-    {"instance": "13015", "chatId": "393478207008@c.us"},
     {"instance": "15037", "chatId": "393271696617@c.us"},
     {"instance": "15038", "chatId": "393270196822@c.us"},
     {"instance": "15040", "chatId": "393505357545@c.us"},
@@ -107,10 +106,10 @@ def instance_messaging(sender_instance):
                 else:
                     print(f"{sender_instance['chatId']} has no available receivers this round.")
 
-            # Wait for a random time between 10 seconds and 2 minutes before the next round
-            wait_time = random.randint(10, 120)
-            print(f"{sender_instance['chatId']} waiting for {wait_time} seconds before the next round.")
-            time.sleep(wait_time)
+            # Wait for a random time between 5 to 30 minutes before the next round
+            action_wait_time = random.randint(5 * 60, 30 * 60)
+            print(f"{sender_instance['chatId']} waiting for {action_wait_time // 60} minutes before the next round.")
+            time.sleep(action_wait_time)
 
         else:
             # Sleep until 06:00 if it's outside allowed messaging hours
@@ -129,11 +128,11 @@ if __name__ == "__main__":
         threads.append(thread)
         thread.start()
 
-        # Introduce a delay of 10 to 30 seconds before starting the next thread
+        # Introduce a delay of 5 to 10 minutes before starting the next thread
         if i < len(instances) - 1:
-            delay = random.randint(10, 30)
-            print(f"Delaying {delay} seconds before starting the next thread.")
-            time.sleep(delay)
+            thread_wait_time = random.randint(5 * 60, 10 * 60)
+            print(f"Delaying {thread_wait_time // 60} minutes before starting the next thread.")
+            time.sleep(thread_wait_time)
 
     # Keep the main program running to allow threads to operate
     for thread in threads:
