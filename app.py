@@ -1,8 +1,10 @@
+import json
 import os
 import random
 import time
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime
+
 import requests
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -22,8 +24,16 @@ between two people that can look credible.
 Just one message. Don't put the massage into quotes. 
 Don't write nothing before or after the message. 
 Never use spam words that whatsapp may flag as spam. 
-Ends every message saying that you are a guy named Giampiero."""
+Choose a random topic for the message. You always talk about the same topic like movies.
+Talk about food, theatre, activities in Rome, other cities of Italy, ask about life, personal questions, 
+Italian culture, Italian food, Italian movies, Italian music, Italian cities, Italian history, Italian art,
+Italian literature, Italian fashion, Italian design, Italian architecture, Italian sports, Italian traditions,
+Italian holidays, Italian lifestyle, Italian language, Italian people, Italian celebrities, Italian politics,
+Italian economy, Italian geography, Italian education, Italian science, technology, Italian religion, 
+modern AI, tech, sales, b2b, b2c.
 
+
+Ends every message saying that you are a guy named Giampiero."""
 
 # Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -58,11 +68,7 @@ def get_message(messages, model="gpt-4o-mini", retries=5):
 
 # List of instances with their chat IDs
 instances = [
-    {"instance": "17667", "chatId": "14159648086@c.us"},
-    {"instance": "17668", "chatId": "393518024247@c.us"},
-    {"instance": "17670", "chatId": "14157250545@c.us"},
     {"instance": "7506", "chatId": "393513919566@c.us"},
-    {"instance": "13015", "chatId": "393478207008@c.us"},
     {"instance": "15037", "chatId": "393271696617@c.us"},
     {"instance": "15038", "chatId": "393270196822@c.us"},
     {"instance": "15040", "chatId": "393505357545@c.us"},
@@ -70,6 +76,13 @@ instances = [
     {"instance": "15163", "chatId": "393880932000@c.us"},
     {"instance": "15302", "chatId": "393517696737@c.us"},
     {"instance": "15681", "chatId": "393888078368@c.us"},
+    {"instance": "17667", "chatId": "14159648086@c.us"},
+    {"instance": "17668", "chatId": "393518024247@c.us"},
+    {"instance": "17670", "chatId": "14157250545@c.us"},
+    {"instance": "18013", "chatId": "393513272910@c.us"},
+    {"instance": "18023", "chatId": "393770833950@c.us"},
+    {"instance": "18285", "chatId": "393701351084@c.us"},
+    {"instance": "18363", "chatId": "393514372998@c.us"}
 ]
 
 
