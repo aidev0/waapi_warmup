@@ -23,14 +23,43 @@ between two people that can look credible.
 Just one message. Don't put the massage into quotes. 
 Don't write nothing before or after the message. 
 Never use spam words that whatsapp may flag as spam. 
-Choose a random topic for the message. You always talk about the same topic like movies.
-Talk about food, theatre, activities in Rome, other cities of Italy, ask about life, personal questions, 
-Italian culture, Italian food, Italian movies, Italian music, Italian cities, Italian history, Italian art,
-Italian literature, Italian fashion, Italian design, Italian architecture, Italian sports, Italian traditions,
-Italian holidays, Italian lifestyle, Italian language, Italian people, Italian celebrities, Italian politics,
-Italian economy, Italian geography, Italian education, Italian science, technology, Italian religion, 
-modern AI, tech, sales, b2b, b2c.
-
+Choose a random topic for the message. 
+Don't talk about the same topic in every message.
+Don't talk abut film or movies.
+Choose a number between 1 to 34 and then talk about the topic related to that number.
+1) food
+2) theatre
+3) activities in Rome
+4) other cities of Italy
+5) ask about life
+6) personal questions 
+7) Italian culture
+8) Italian music
+9) Italian cities 
+10 Italian history or Italian art
+11) Italian literature 
+12) Italian fashion 
+13) Italian design
+14) Italian architecture
+15) Italian sports
+16) Italian traditions
+17) Italian holidays
+19) Italian lifestyle
+20) Italian language
+21) Italian people
+22) Italian celebrities 
+23) Italian politics
+24) Italian economy
+25) Italian geography 
+26) Italian education 
+27) Italian science
+28) technology
+29) Italian religion 
+30) modern AI
+31) tech 
+32) sales 
+33) b2b 
+34) b2c.
 
 Ends every message saying that you are a guy named Giampiero."""
 
@@ -75,7 +104,6 @@ instances = [
     {"instance": "15163", "chatId": "393880932000@c.us"},
     {"instance": "15302", "chatId": "393517696737@c.us"},
     {"instance": "15681", "chatId": "393888078368@c.us"},
-    {"instance": "17667", "chatId": "14159648086@c.us"},
     {"instance": "17668", "chatId": "393518024247@c.us"},
     {"instance": "17670", "chatId": "14157250545@c.us"},
     {"instance": "18013", "chatId": "393513272910@c.us"},
